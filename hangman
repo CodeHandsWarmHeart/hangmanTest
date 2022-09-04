@@ -1,0 +1,86 @@
+import random
+def guess_next_letter(pattern, used_letters, word_list):
+    """my overall strategy is 
+       making guesses following the rank of most popular letters among all the word among the eligible words (filter out ineligible words in time)
+    """
+    """because when game start the word has been choosen 
+        which means the lengh of the word has informed to the player 
+        so we should narrow down the original world_list using all given hint 
+        such as word lenth 
+        and already reviewed letter in the pattern
+    """ 
+    up_to_date_word_list = list(filter(lambda x: len(x)==len(pattern), word_list)) #filter eligible words with correct lengh
+    
+    up_to_date_word_list = 
+    
+    
+    
+    
+def play(word,triesRemain):
+    word_completion = "_" * len(word)
+    guessed = False
+    guessed_letters = []
+    guessed_words = []
+    print("Let's play Hangman!")
+    print(" “.join(word_completion))
+    print("\n")
+    while not guessed and triesRemain > 0:
+        guess = input("Please guess a letter or word: ").upper()
+        up_to_date_word_list = original_word_bank
+        """
+        
+        world_list = list(filter(lambda x: len(x)==len(word), words))
+        guess_next_letter(word_completion, gussed_letters, word_list):
+        """
+        if len(guess) == 1 and guess.isalpha():
+            if guess in guessed_letters:
+                print("You already guessed the letter", guess)
+            elif guess not in word:
+                print(guess, "is not in the word.")
+                triesRemain -= 1
+                guessed_letters.append(guess)
+            else:
+                print("Good job,", guess, "is in the word!")
+                guessed_letters.append(guess)
+                word_as_list = list(word_completion)
+                indices = [i for i, letter in enumerate(word) if letter == guess]
+                for index in indices:
+                    word_as_list[index] = guess
+                word_completion = "".join(word_as_list)
+                if "_" not in word_completion:
+                    guessed = True
+        elif len(guess) == len(word) and guess.isalpha():
+            if guess in guessed_words:
+                print("You already guessed the word", guess)
+            elif guess != word:
+                print(guess, "is not the word.")
+                triesRemain -= 1
+                guessed_words.append(guess)
+            else:
+                guessed = True
+                word_completion = word
+        else:
+            print("Not a valid guess.")
+        print(" ".join(word_completion))
+        print("\n")
+    if guessed:
+        print("Congrats, you guessed the word! You win!")
+    else:
+        print("Sorry, you ran out of tries. The word was " + word + ". Maybe next time!")
+        
+def get_word():
+    word = random.choice(original_word_bank)
+    return word.upper()
+    
+def main():
+    word = get_word()
+    play(word,6)
+    while input("Play Again? (Y/N) ").upper() == "Y":
+        word = get_word()
+        play(word)
+
+original_word_bank = ['bad','dad','about','and','around', 'wares','soup',
+    'mount','extend','brown','expert','tired','humidity','backpack','crust','dent','market','knock','smite','windy','coin','throw','silence','bluff','downfall','climb','lying','weaver','snob','kickoff','match','quaker','foreman','excite','thinking','mend','allergen','pruning','coat','emerald','coherent','manic','multiple','square','funded','funnel','sailing','dream','mutation','strict','mystic','film','guide','strain','bishop','settle','plateau','emigrate','marching','optimal','medley','endanger','wick','condone','schema','rage','figure',]
+if __name__ == "__main__":
+    main()   
+    
