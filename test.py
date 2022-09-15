@@ -1,36 +1,27 @@
-import collections
+import unittest
+import random
 
-test_list = ['isaaa', 'bests', 'forss', 'geeks']
+import main
+class HangmanTestCase(unittest.TestCase):
+    def setUp(self):
+        self.original_word_bank = ['bad', 'dad', 'about', 'and', 'around', 'wares', 'soup',
+                      'mount', 'extend', 'brown', 'expert', 'tired', 'humidity', 'backpack', 'crust', 'dent', 'market',
+                      'knock', 'smite', 'windy', 'coin', 'throw', 'silence', 'bluff', 'downfall', 'climb', 'lying',
+                      'weaver', 'snob', 'kickoff', 'match', 'quaker', 'foreman', 'excite', 'thinking', 'mend',
+                      'allergen', 'pruning', 'coat', 'emerald', 'coherent', 'manic', 'multiple', 'square', 'funded',
+                      'funnel', 'sailing', 'dream', 'mutation', 'strict', 'mystic', 'film', 'guide', 'strain', 'bishop',
+                      'settle', 'plateau', 'emigrate', 'marching', 'optimal', 'medley', 'endanger', 'wick', 'condone',
+                      'schema', 'rage', 'figure', ]
+        self.word = random.choice(self.original_word_bank)
+        self.word_completion = "_" * len(self.word)
+        self.guessedLetters = []
 
-# printing original list
-print("The original list is : " + str(test_list))
+    def test_returnlowerCaseLetter(self):
+        self.assertTrue(main.guess_next_letter(self.word_completion, self.guessedLetters, self.original_word_bank).islower())
+    def test_guessIsInTargetAnswer(self):
+        self.assertIn(main.guess_next_letter(self.word_completion, self.guessedLetters, self.original_word_bank), self.original_word_bank)
 
-# Initializing substring
-sub_str = '_e_ks'
-letter_index = []
-indices = [i for i, letter in enumerate(sub_str) if letter != '_']
-print(indices)
-
-
-def get_eligible_word_list(word_list, indexes_of_guessed_letter, pattern):
-    for i in word_list:
-        for j in indexes_of_guessed_letter:
-            if i[j] != pattern[j]:
-                word_list.remove(i)
-                break
-    return list(word_list)
+    def test_guessIsInTargetAnswer(self):
+        self.assertNotIn(main.guess_next_letter(self.word_completion, self.guessedLetters, self.original_word_bank), self.guessedLetters)
 
 
-# test_list = ['isaaa', 'bests', 'forss', 'geeks']
-
-print(get_eligible_word_list(test_list, indices, sub_str))
-
-used_letters = ['e', 'b']
-rank_of_letters = collections.Counter("".join(test_list)).most_common()
-# data structure rank_of_letters = [('e', 3), ('s', 1)]
-print(rank_of_letters)
-for x in rank_of_letters:
-    if x[0] in used_letters:
-        rank_of_letters.remove(x)
-
-print(rank_of_letters[0][0])
