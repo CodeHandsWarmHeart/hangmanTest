@@ -17,9 +17,7 @@ def guess_next_letter(pattern, used_letters, word_list):
     # filter eligible words with correct length
     updated_eligible_wordlist = list(filter(lambda word_to_check_length: len(word_to_check_length) == len(pattern), word_list))
 
-    indexes_of_guessed_letter: list[int] = [i for i, letter in enumerate(pattern) if letter != '_']
-
-    updated_eligible_wordlist = get_eligible_word_list(updated_eligible_wordlist, indexes_of_guessed_letter, pattern, used_letters)
+    updated_eligible_wordlist = get_eligible_word_list(updated_eligible_wordlist, pattern, used_letters)
 
     rank_of_letters = collections.Counter("".join(updated_eligible_wordlist)).most_common()
     # data structure example rank_of_letters = [('e', 3), ('s', 1)]
@@ -34,22 +32,41 @@ def guess_next_letter(pattern, used_letters, word_list):
 
 
 
-def get_eligible_word_list(word_list, indexes_of_guessed_letter, pattern, used_letters):
+def get_eligible_word_list(word_list, pattern, used_letters):
+    indexes_of_guessed_letter: list[int] = [i for i, letter in enumerate(pattern) if letter != '_']
 
-    # remove words contains incorrect guesses
-    for i in word_list:
-        for j in used_letters:
-            if j in i:
-                word_list.remove()
+    correct_guesses = []
+    for count, item in enumerate(pattern):
+        if count in indexes_of_guessed_letter:
+            correct_guesses.append(item)
 
-    word_list = list(filter(lambda w: w.find, used_letters))
+    #remove duplicate
+    correct_guesses = list(set(correct_guesses))
+
+    wrong_guesses = list(filter(lambda letterOfAllUsedGuesses: letterOfAllUsedGuesses not in correct_guesses,used_letters))
+    if correct_guesses:
+        for used_letter in used_letters:
+            if used_letter not in correct_guesses:
+                wrong_guesses.append(used_letter)
+    else:
+        wrong_guesses = used_letters
+
+    if wrong_guesses:
+        # remove words contains incorrect guesses
+        for i in word_list:
+            for j in wrong_guesses:
+                if j in i:
+                    word_list.remove()
+
+    #word_list = list(filter(lambda w: w.find, used_letters))
 
     # remove words not match with pattern
-    for i in word_list:
-        for j in indexes_of_guessed_letter:
-            if i[j].upper() != pattern[j]:
-                word_list.remove(i)
-                break
+    if indexes_of_guessed_letter:
+        for i in word_list:
+            for j in indexes_of_guessed_letter:
+                if i[j].upper() != pattern[j]:
+                    word_list.remove(i)
+                    break
 
     return list(word_list)
 
