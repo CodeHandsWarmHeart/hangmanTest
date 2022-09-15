@@ -26,10 +26,7 @@ def guess_next_letter(pattern, used_letters, word_list):
 
     rank_of_letters = list(filter(lambda rank_tuple: rank_tuple[0].upper() not in used_letters, rank_of_letters))
     # remove the letters which have been tried
-    # rank_of_letters = list(filter(lambda rank_tuple: rank_tuple[0].upper() not in used_letters, rank_of_letters))
-    """for x in rank_of_letters:
-        if x[0].upper() in used_letters:
-            rank_of_letters.remove(x)"""
+
     try:
         return rank_of_letters[0][0]
     except IndexError:
