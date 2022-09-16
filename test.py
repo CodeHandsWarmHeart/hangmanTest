@@ -21,7 +21,7 @@ class HangmanTestCase(unittest.TestCase):
     def test_guessIsInTargetAnswer(self):
         self.assertIn(main.guess_next_letter(self.word_completion, self.guessedLetters, self.original_word_bank), self.original_word_bank)
 
-    def test_guessIsInTargetAnswer(self):
+    def test_guessNotInUsedGuesses(self):
         self.assertNotIn(main.guess_next_letter(self.word_completion, self.guessedLetters, self.original_word_bank), self.guessedLetters)
 
 
